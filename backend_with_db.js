@@ -122,6 +122,32 @@ async function addUser(user){
     }   
 }
 
+app.patch('/users/:id', async (req, res) => {
+    const id = req.params['id'];
+    const updatedUser = req.body;
+    const result = await updateUser(id, updatedUser);
+    if (result === 204)
+        res.status(204).end();
+    else if (result === 404)
+        res.status(404).send('Resource not found.');
+    else if (result === 500)
+       res.status(500).send('An error ocurred in the server.');
+});
+
+async function updateUser(id, updatedUser){
+    try{
+        const result = await userModel.findByIdAndUpdate(id, updatedUser);
+        if (result)
+            return 204;
+        else 
+            return 404;
+    }catch (error){
+        console.log(error);
+        return 500;
+    }
+}
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
