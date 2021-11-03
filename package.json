@@ -4,7 +4,7 @@
   "description": "A sample backend for our class app with database access (MongoDB) using Mongoose.",
   "main": "backend_with_db.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "prettier --check .",
     "dev": "nodemon backend_with_db.js",
     "start": "node backend_with_db.js"
   },
