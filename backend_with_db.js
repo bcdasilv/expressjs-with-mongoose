@@ -42,6 +42,6 @@ app.post("/users", async (req, res) => {
   else res.status(500).end();
 });
 
-app.listen(port, () => {
-  console.log(`REST API listening at port ${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log('REST API is listening.');
 });
