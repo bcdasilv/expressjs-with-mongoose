@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const userModel = require("./user");
+const dotenv = require('dotenv');
+dotenv.config();
 
 mongoose.connect(
-    'mongodb://localhost:27017/users',
+    "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@csc307.7ijdm.mongodb.net/"+process.env.MONGO_DB+"?retryWrites=true&w=majority",
+    //'mongodb://localhost:27017/users',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true
