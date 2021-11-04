@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [cloud-database]
+    branches: [cloud-database, ci-with-testing]
   pull_request:
-    branches: [cloud-database]
+    branches: [cloud-database, ci-with-testing]
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:

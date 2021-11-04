@@ -1,3 +1,8 @@
+// const { TextEncoder, TextDecoder } = require("util");
+
+// global.TextEncoder = TextEncoder;
+// global.TextDecoder = TextDecoder;
+
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
@@ -19,6 +24,6 @@ const UserSchema = new mongoose.Schema(
   { collection: "users_list" }
 );
 
-const User = mongoose.model("User", UserSchema);
+//const User = mongoose.model("User", UserSchema);
 
-module.exports = User;
+module.exports = UserSchema;
