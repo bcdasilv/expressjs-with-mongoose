@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema(
   { collection: "users_list" }
 );
 
+//model instantiation now on the users-services module
 //const User = mongoose.model("User", UserSchema);
 
 module.exports = UserSchema;
