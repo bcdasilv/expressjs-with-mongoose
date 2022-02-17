@@ -1,153 +1,47 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+const express = require("express");
+const cors = require("cors");
 
-const userModel = require("./models/user");
+const userServices = require("./models/user-services");
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
+app.use(cors());
 app.use(express.json());
 
-mongoose.connect(
-    "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PWD+"@csc307.7ijdm.mongodb.net/"+process.env.MONGO_DB+"?retryWrites=true&w=majority",
-    /* 'mongodb://localhost:27017/users', */
-    {
-      useNewUrlParser: true, //useFindAndModify: false,
-      useUnifiedTopology: true
-    }
-  ).catch(error => console.log(error));
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-app.get('/users', async (req, res) => {
-    //res.send(users); //HTTP code 200 is set by default. See an alternative below
-    //res.status(200).send(users);
-    const name = req.query['name'];
-    const job = req.query['job'];
-    if (name === undefined && job === undefined){
-        try {
-            const users_from_db = await userModel.find();
-            res.send({users_list: users_from_db});
-        } catch(error){
-            res.status(500).send('An error ocurred in the server.');
-        }
-    }
-    else if (name && job === undefined) {
-        let result = await findUserByName(name);
-        result = {users_list: result}
-        res.send(result);        
-    }
-    else if (job && name === undefined){
-        let result = await findUserByJob(job);
-        result = {users_list: result}
-        res.send(result);    
-    }
-    else {
-        let result = await findUserByNameAndJob(name, job);
-        result = {users_list: result}
-        res.send(result);    
-    }
+app.get("/users", async (req, res) => {
+  const name = req.query["name"];
+  const job = req.query["job"];
+  try {
+    const result = await userServices.getUsers(name, job);
+    res.send({ users_list: result });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error ocurred in the server.");
+  }
 });
 
-async function findUserByName(name){
-    return await userModel.find({'name':name});
-}
-
-async function findUserByJob(job){
-    return await userModel.find({'job':job});
-}
-
-async function findUserByNameAndJob(name, job){
-    return await userModel.find({'name':name, 'job': job});
-}
-
-app.get('/users/:id', async (req, res) => {
-    const id = req.params['id'];
-    let result = await findUserById(id);
-    if (result === undefined || result === null)
-        res.status(404).send('Resource not found.');
-    else {
-        result = {users_list: result};
-        res.send(result);
-    }
+app.get("/users/:id", async (req, res) => {
+  const id = req.params["id"];
+  const result = await userServices.findUserById(id);
+  if (result === undefined || result === null)
+    res.status(404).send("Resource not found.");
+  else {
+    res.send({ users_list: result });
+  }
 });
 
-async function findUserById(id){
-    try{
-        return await userModel.findById(id);
-    }catch(error) {
-        console.log(error);
-        return undefined;
-    }
-}
-
-app.delete('/users/:id', async (req, res) => {
-    const id = req.params['id'];
-    if (deleteUserById(id))
-        res.status(204).end();
-    else
-        res.status(404).send('Resource not found.');
+app.post("/users", async (req, res) => {
+  const user = req.body;
+  const savedUser = await userServices.addUser(user);
+  if (savedUser) res.status(201).send(savedUser);
+  else res.status(500).end();
 });
 
-async function deleteUserById(id){
-    try{
-        if (await userModel.findByIdAndDelete(id))
-            return true;
-    }catch(error) {
-        console.log(error);
-        return false;
-    }
-}
-
-app.post('/users', async (req, res) => {
-    const user = req.body;
-    if (await addUser(user))
-        res.status(201).end();
-    else
-        res.status(500).end();
-});
-
-async function addUser(user){
-    try{
-        const userToAdd = new userModel(user);
-        if (await userToAdd.save())
-            return true;
-    }catch(error) {
-        console.log(error);
-        return false;
-    }   
-}
-
-app.patch('/users/:id', async (req, res) => {
-    const id = req.params['id'];
-    const updatedUser = req.body;
-    const result = await updateUser(id, updatedUser);
-    if (result === 204)
-        res.status(204).end();
-    else if (result === 404)
-        res.status(404).send('Resource not found.');
-    else if (result === 500)
-       res.status(500).send('An error ocurred in the server.');
-});
-
-async function updateUser(id, updatedUser){
-    try{
-        const result = await userModel.findByIdAndUpdate(id, updatedUser);
-        if (result)
-            return 204;
-        else 
-            return 404;
-    }catch (error){
-        console.log(error);
-        return 500;
-    }
-}
-
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening.");
 });
