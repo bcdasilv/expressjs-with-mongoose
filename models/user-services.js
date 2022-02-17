@@ -7,20 +7,14 @@ dotenv.config();
 let dbConnection;
 
 function getDbConnection() {
-    if (!dbConnection) {
-      // dbConnection = mongoose.createConnection("mongodb://localhost:27017/users", {
-      //     useNewUrlParser: true,
-      //     useUnifiedTopology: true,
-      // });
-      dbConnection = mongoose.createConnection(process.env.MONGODB_URI,
-        {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }
-      );
-    }
-    return dbConnection;
+  if (!dbConnection) {
+    dbConnection = mongoose.createConnection(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
   }
+  return dbConnection;
+}
 
 async function getUsers(name, job) {
   const userModel = getDbConnection().model("User", UserSchema);
