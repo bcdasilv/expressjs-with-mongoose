@@ -6,6 +6,11 @@ dotenv.config();
 
 let dbConnection;
 
+function setConnection(newConn){
+  dbConnection = newConn;
+  return dbConnection;
+}
+
 function getDbConnection() {
   if (!dbConnection) {
     dbConnection = mongoose.createConnection(process.env.MONGODB_URI, {
@@ -67,5 +72,6 @@ async function findUserByJob(job) {
 module.exports = {
   getUsers,
   findUserById,
-  addUser
+  addUser,
+  setConnection
 }
