@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const userServices = require("./models/user-services");
+userServices.createDbConnection();
 
 const app = express();
 const port = 5000;
