@@ -57,7 +57,7 @@ app.post("/signup", async (req, res) => {
       to re-compute them using the salts for each user.
       More info: https://auth0.com/blog/adding-salt-to-hashing-a-better-way-to-store-passwords/
       */
-      // Also, you can pull this salt from an env variable
+      // Also, you can pull this salt param from an env variable
       const salt = await bcrypt.genSalt(10);
       // On the database you never store the user input pwd. 
       // So, let's hash it:
@@ -90,10 +90,10 @@ function authenticateUser(req, res, next) {
     try {
       // verify() returns the decoded obj which includes whatever objs
       // we use to code/sign the token
-      const decoded = jwt.verify(token, process.env.TOKEN_SECRET)   
+      const decoded = jwt.verify(token, process.env.TOKEN_SECRET);   
       // in our case, we used the username to sign the token
       console.log(decoded);
-      next()
+      next();
     } catch (error) {
       console.log(error);
       return res.status(401).end();  
