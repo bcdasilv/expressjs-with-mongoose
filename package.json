@@ -5,8 +5,8 @@
   "main": "backend_with_db.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon backend_with_db.js",
-    "start": "node backend_with_db.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "Dr. da Silva",
   "license": "ISC",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.12",
-    "prettier": "2.4.1"
+    "prettier": "2.4.1",
+    "supertest": "^6.2.2"
   }
 }

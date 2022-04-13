@@ -1,17 +1,31 @@
 const express = require("express");
 const cors = require("cors");
+// const mongoose = require("mongoose");
 
 const userServices = require("./models/user-services");
-userServices.createDbConnection();
+
+// userServices.createDbConnection();
 
 const app = express();
-const port = 5000;
 
 app.use(cors());
 app.use(express.json());
 
+function setDatabaseConn(conn) {
+  userServices.setDataBaseConn(conn);
+}
+
+// app.connectDB = async () => {
+//   await userServices.createDbConnection();
+//   // await mongoose.connect(process.env.MONGODB_URI, {
+//   //   useNewUrlParser: true,
+//   //   useUnifiedTopology: true,
+//   // });  
+//   // userServices.setDataBase(mongoose);
+// }
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json("Hello World!");
 });
 
 app.get("/users", async (req, res) => {
@@ -19,7 +33,7 @@ app.get("/users", async (req, res) => {
   const job = req.query["job"];
   try {
     const result = await userServices.getUsers(name, job);
-    res.send({ users_list: result });
+    res.json({ users_list: result });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error ocurred in the server.");
@@ -43,6 +57,4 @@ app.post("/users", async (req, res) => {
   else res.status(500).end();
 });
 
-app.listen(process.env.PORT || port, () => {
-  console.log("REST API is listening.");
-});
+module.exports = { app, setDatabaseConn } ;
