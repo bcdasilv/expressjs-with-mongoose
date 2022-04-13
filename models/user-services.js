@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const UserSchema = require("./user");
 const dotenv = require("dotenv");
 dotenv.config();
 
 // Empty connection. 
 // Use setDataBaseConn() to inject an actuall connection
-let conn = mongoose.connection;
+let conn;
 
 function setDataBaseConn(c) {
   conn = c;
