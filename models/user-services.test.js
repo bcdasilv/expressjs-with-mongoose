@@ -59,11 +59,11 @@ beforeEach(async () => {
   await result.save();
 
   dummyUser = {
-    name:"Cindy",
-    job:"singer",
+    name: "Cindy",
+    job: "singer",
   };
   result = new userModel(dummyUser);
-
+  
   await result.save();
 });
 
