@@ -63,7 +63,6 @@ beforeEach(async () => {
     job: "singer",
   };
   result = new userModel(dummyUser);
-  
   await result.save();
 });
 
