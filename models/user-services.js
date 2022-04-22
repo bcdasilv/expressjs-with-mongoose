@@ -13,14 +13,7 @@ function setConnection(newConn) {
 function getConnection() {
   if (!conn) {
     if (process.argv.includes("--prod")) {
-      conn = mongoose.createConnection(
-        "mongodb+srv://" +
-          process.env.MONGO_USER +
-          ":" +
-          process.env.MONGO_PWD +
-          "@csc307.7ijdm.mongodb.net/" +
-          process.env.MONGO_DB +
-          "?retryWrites=true&w=majority",
+      conn = mongoose.createConnection(process.env.MONGODB_URI,
         {
           useNewUrlParser: true,
           useUnifiedTopology: true,
