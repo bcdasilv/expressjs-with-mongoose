@@ -190,7 +190,7 @@ test("Adding user -- failure path with invalid job length", async () => {
     .post("/users")
     .send(toBeAdded)
     .set("Accept", "application/json")
-    .expect(500)  
+    .expect(400)  
 
   expect(response.body).toMatchObject({});
 });
@@ -207,7 +207,7 @@ test("Adding user -- successful path", async () => {
     job: "Young wizard"
   };
   //Using mockingoose
-  // mockingoose(userModel).toReturn(addedUser, 'save');
+  mockingoose(userModel).toReturn(addedUser, 'save');
 
   const response = await supertest(appModule.app)
     .post("/users")
