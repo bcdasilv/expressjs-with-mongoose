@@ -92,7 +92,7 @@ afterEach(async () => {
  
 });
 
-test.only("dummy", async () => {
+test("dummy", async () => {
   const result = await supertest(appModule.app)
   .get("/")
   .expect(200);
