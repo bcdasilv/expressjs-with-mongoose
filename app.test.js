@@ -6,6 +6,19 @@ const mongoose = require("mongoose");
 const UserSchema = require("./models/user");
 const mockingoose = require("mockingoose");
 
+/**
+ * This is an example of API Testing. 
+ * This example demonstrates three strategies for testing API endpoints:
+ * 1) Mocking up the db calls
+ * 2) Connecting to an actual database based on the URL in a env variable.
+ * 3) Connecting to an in-memory database
+ * 
+ * Libraries used besides jest: 
+ *  Mockingoose: for mocking the database calls (if using this strategy)
+ *  Supertest: for making calls to your API endpoints.
+ *  MongoMemoryServer: for the in-memory db (if using this strategy)
+ */
+
 let userModel;
 
 let mongoServer;

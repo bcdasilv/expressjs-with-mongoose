@@ -54,7 +54,7 @@ app.post("/users", async (req, res) => {
   const user = req.body;
   const savedUser = await userServices.addUser(user);
   if (savedUser) res.status(201).send(savedUser);
-  else res.status(500).end();
+  else res.status(400).end();
 });
 
 module.exports = { app, setDatabaseConn } ;
