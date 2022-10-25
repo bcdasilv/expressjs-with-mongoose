@@ -12,17 +12,11 @@ function setConnection(newConn) {
 
 function getConnection() {
   if (!conn) {
-    if (process.argv.includes("--prod")) {
-      conn = mongoose.createConnection(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-    } else {
-      conn = mongoose.createConnection("mongodb://localhost:27017/users", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-    }
+    conn = mongoose.createConnection(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(conn);
   }
   return conn;
 }
