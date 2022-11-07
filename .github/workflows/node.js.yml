@@ -6,7 +6,7 @@ name: Node.js CI
 on:
   push:
     branches: [cloud-database, ci-with-testing]
-  pull_request: #optional
+  pull_request:
     branches: [cloud-database, ci-with-testing]
 
 jobs:
