@@ -7,7 +7,7 @@ dotenv.config();
 let conn;
 
 function setConnection(newConn) {
-  return (conn = newConn);
+  return (conn = newConn)
 }
 
 function getConnection() {
