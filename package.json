@@ -6,7 +6,7 @@
   "scripts": {
     "test": "prettier --check . && jest",
     "dev": "nodemon backend_with_db.js",
-    "start": "node backend_with_db.js --prod"
+    "start": "node backend_with_db.js"
   },
   "author": "Dr. da Silva",
   "license": "ISC",
